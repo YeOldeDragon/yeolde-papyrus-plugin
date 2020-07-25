@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+YeOldePapyrus/YeOldePlugin.vcxproj.user
+/.vs/YeOldePapyrus/v16
+/YeOldePapyrus/.vs
+/YeOldePapyrus/x64

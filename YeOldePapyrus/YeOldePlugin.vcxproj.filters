@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="exports.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{60ec6361-4e8b-4a26-8967-e0be28ef69b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes">
+      <UniqueIdentifier>{849b99ea-3c25-4fdb-8e0d-5a350566c750}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="YeOldeGameData.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="YeOldeFormList.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="YeOldeForm.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="YeOldeFormList.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="YeOldeGameData.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="YeOldeForm.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
