@@ -3,7 +3,6 @@
 #include "skse64/PluginAPI.h"  // SKSEInterface, PluginInfo
 
 #include <ShlObj.h>  // CSIDL_MYDOCUMENTS
-
 #include "version.h"  // VERSION_VERSTRING, VERSION_MAJOR
 
 #include "YeOldeGameData.h"

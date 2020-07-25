@@ -291,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h" />
+    <ClInclude Include="WMRResultArrayUtils.h" />
     <ClInclude Include="YeOldeForm.h" />
     <ClInclude Include="YeOldeFormList.h" />
     <ClInclude Include="YeOldeGameData.h" />

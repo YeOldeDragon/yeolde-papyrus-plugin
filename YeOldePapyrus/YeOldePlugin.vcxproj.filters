@@ -21,12 +21,10 @@
     <ClCompile Include="YeOldeFormList.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="YeOldeForm.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YeOldeFormList.h">
@@ -35,10 +33,11 @@
     <ClInclude Include="YeOldeGameData.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="version.h">
+    <ClInclude Include="YeOldeForm.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="YeOldeForm.h">
+    <ClInclude Include="version.h" />
+    <ClInclude Include="WMRResultArrayUtils.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>
