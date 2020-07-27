@@ -1,0 +1,10 @@
+{
+  "commands": {
+    "deploy SE": {
+      "fileName": "cmd.exe",
+      "workingDirectory": ".",
+      "arguments": "/c \"deploy SE.cmd\""
+    }
+  }
+, "-vs-binding":{"AfterBuild":["deploy SE"]}
+}

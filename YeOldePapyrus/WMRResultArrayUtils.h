@@ -11,9 +11,9 @@ namespace VMResultArrayUtils
 	/// <param name="value">The item to find</param>
 	/// <returns>True if the item is found. False if not.</returns>
 	template <typename T>
-	bool HasItem(VMResultArray<T> theArray, T value)
+	bool HasItem(VMResultArray<T>* theArray, T value)
 	{
-		if (std::find(theArray.begin(), theArray.end(), value) != theArray.end())
+		if (std::find(theArray->begin(), theArray->end(), value) != theArray->end())
 			return true;
 
 		return false;
@@ -43,14 +43,14 @@ namespace VMResultArrayUtils
 	/// <param name="newItems">The items to add</param>
 	/// <param name="allowDuplicates">True if the list can have duplicates.</param>
 	template <typename T>
-	void Add(VMResultArray<T> theArray, VMResultArray<T> newItems, bool allowDuplicates = false)
+	void Add(VMResultArray<T>* theArray, VMResultArray<T> newItems, bool allowDuplicates = false)
 	{
 		for (size_t i = 0; i < newItems.size(); i++)
 		{
 			if (!allowDuplicates && HasItem(theArray, newItems[i]))
 				continue;
 
-			theArray.push_back(newItems[i]);
+			theArray->push_back(newItems[i]);
 		}
 	}
 }

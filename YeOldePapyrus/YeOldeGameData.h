@@ -59,7 +59,7 @@ namespace YeOldeGameData
 	/// -> FormType::kFormType_Outfit
 	/// </summary>
 	/// <returns>An array of items.</returns>
-	VMResultArray<TESForm*> GetAllMaterialsFromConstructibleObject(StaticFunctionTag* functionTag = NULL, bool addCookingIngredients = true);
+	VMResultArray<TESForm*> GetAllMaterialsFromConstructibleObject(StaticFunctionTag* functionTag = NULL);
 
 
 	/// <summary>

@@ -8,13 +8,13 @@ namespace YeOldeFormList
 	/// </summary>
 	/// <param name="list">FormList to add items in</param>
 	/// <param name="forms">Forms items to add.</param>
-	void AddForms(BGSListForm* list, VMResultArray<TESForm*> forms)
+	void AddForms(BGSListForm* list, VMResultArray<TESForm*>* forms)
 	{
 		if (list)
 		{
-			for (std::size_t i = 0; i < forms.size(); i++)
+			for (std::size_t i = 0; i < forms->size(); i++)
 			{
-				TESForm* form = forms[i];
+				TESForm* form = (*forms)[i];
 				if (form)
 					CALL_MEMBER_FN(list, AddFormToList)(form);
 			}
