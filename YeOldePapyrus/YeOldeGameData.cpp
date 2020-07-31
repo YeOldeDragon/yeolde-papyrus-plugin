@@ -94,6 +94,7 @@ namespace YeOldeGameData
 		for (UInt32 i = 0; i < dataHandler->ingredients.count; i++)
 		{
 			dataHandler->ingredients.GetNthItem(i, ingredient);
+			_MESSAGE("  -> ingredient: %u, %x, %u", ingredient->formID, ingredient->formID, ingredient->IsPlayable());
 			result.push_back(ingredient);
 		}
 
@@ -189,6 +190,10 @@ namespace YeOldeGameData
 					continue;
 
 				if (IsNotMaterial(material))
+					continue;
+
+				if (YeOldeForm::HasKeywords(material, "VendorItemOreIngot") ||
+					YeOldeForm::HasKeywords(material, "VendorItemAnimalHide"))
 					continue;
 
 				// If the item is already in the list, no need to add it.
@@ -287,9 +292,16 @@ namespace YeOldeGameData
 			tmpResult = YeOldeGameData::GetAllMaterialsFromConstructibleObject();
 			VMResultArrayUtils::Add(result, tmpResult);
 		}
+
 		_MESSAGE("UpdateCraftingMaterialsList -> result contains %u items)", result->size());
 		YeOldeFormList::AddForms(craftingList, result);
 		_MESSAGE("UpdateCraftingMaterialsList -> END (%u items returned)", craftingList->forms.count);
+	}
+
+
+	void ConcatenateFormLists(StaticFunctionTag*, BGSListForm* result, BGSListForm* itemsToAdd)
+	{
+		YeOldeFormList::ConcatenateLists(result, itemsToAdd);
 	}
 
 
@@ -336,6 +348,9 @@ namespace YeOldeGameData
 
 		registry->RegisterFunction(
 			new NativeFunction7 <StaticFunctionTag, void, BGSListForm*, bool, bool, bool, bool, bool, bool>("AddAllCraftingMaterialsToList", "yeolde_papyrus", YeOldeGameData::AddAllCraftingMaterialsToList, registry));
+
+		registry->RegisterFunction(
+			new NativeFunction2 <StaticFunctionTag, void, BGSListForm*, BGSListForm*>("ConcatenateFormLists", "yeolde_papyrus", YeOldeGameData::ConcatenateFormLists, registry));
 
 		return true;
 	}

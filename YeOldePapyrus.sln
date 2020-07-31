@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tasks", "tasks", "{963F8516
 	ProjectSection(SolutionItems) = preProject
 		commands.json = commands.json
 		deploy SE.cmd = deploy SE.cmd
+		deploy VR.cmd = deploy VR.cmd
 	EndProjectSection
 EndProject
 Global

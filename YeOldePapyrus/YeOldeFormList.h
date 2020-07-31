@@ -6,4 +6,6 @@
 namespace YeOldeFormList
 {
 	void AddForms(BGSListForm* list, VMResultArray<TESForm*>* forms);
+
+	void ConcatenateLists(BGSListForm* list, BGSListForm* listToAdd);
 }

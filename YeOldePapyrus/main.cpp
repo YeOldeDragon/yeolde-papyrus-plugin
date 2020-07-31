@@ -26,10 +26,19 @@ extern "C" {
 		if (a_skse->isEditor) {
 			_FATALERROR("[FATAL ERROR] Loaded in editor, marking as incompatible!\n");
 			return false;
-		} else if (a_skse->runtimeVersion != RUNTIME_VERSION_1_5_97) {
+		} 
+#if defined (SKYRIM_VR)
+		else if (a_skse->runtimeVersion != RUNTIME_VR_VERSION_1_4_15) {
 			_FATALERROR("[FATAL ERROR] Unsupported runtime version %08X!\n", a_skse->runtimeVersion);
 			return false;
 		}
+#else
+		else if (a_skse->runtimeVersion < RUNTIME_VERSION_1_5_80) {
+			_FATALERROR("[FATAL ERROR] Unsupported runtime version %08X!\n", a_skse->runtimeVersion);
+			return false;
+		}
+#endif	
+
 		g_papyrus = (SKSEPapyrusInterface*)a_skse->QueryInterface(kInterface_Papyrus);
 
 		if (!g_papyrus) {

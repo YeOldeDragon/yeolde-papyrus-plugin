@@ -20,4 +20,19 @@ namespace YeOldeFormList
 			}
 		}
 	}
+
+
+	void ConcatenateLists(BGSListForm* list, BGSListForm* listToAdd)
+	{
+		if (list && listToAdd)
+		{
+			auto forms = listToAdd->forms;
+			for (std::size_t i = 0; i < forms.count; i++)
+			{
+				TESForm* form = forms[i];
+				if (form)
+					CALL_MEMBER_FN(list, AddFormToList)(form);
+			}
+		}
+	}
 }
