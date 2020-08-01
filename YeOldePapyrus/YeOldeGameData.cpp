@@ -1,6 +1,5 @@
 #include "YeOldeGameData.h"
-#include "YeOldeFormList.h"
-#include "YeOldeForm.h"
+#include "CraftingData.h"
 #include "WMRResultArrayUtils.h"
 
 #include "skse64/GameFormComponents.h"
@@ -16,286 +15,100 @@
 #include "skse64/PapyrusArgs.h"
 #include "skse64/PapyrusKeyword.h"
 
+#include "YeOldeFormList.h"
+#include "YeOldeForm.h"
+
 namespace YeOldeGameData
 {
-
-	bool IsNotMaterial(TESForm* material)
-	{
-
-		if (material->formType == FormType::kFormType_Ingredient ||
-			material->formType == FormType::kFormType_SoulGem ||
-			material->formType == FormType::kFormType_Potion ||
-			material->formType == FormType::kFormType_Weapon ||
-			material->formType == FormType::kFormType_Armor ||
-			material->formType == FormType::kFormType_Book ||
-			material->formType == FormType::kFormType_Ammo ||
-			material->formType == FormType::kFormType_LeveledItem ||
-			material->formType == FormType::kFormType_Outfit)
-			return true;
-
-		return false;
-	}
-
 	VMResultArray<TESForm*> GetAllBaseEnchantments(StaticFunctionTag*)
 	{
-		_MESSAGE("GetAllBaseEnchantments() -> START");
-		VMResultArray<TESForm*> result;
-
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-
-		EnchantmentItem* enchant = NULL;
-		EnchantmentItem* baseEnchant = NULL;
-
-		_MESSAGE("GetAllBaseEnchantments() -> Enchantments count: %u", dataHandler->enchantments.count);
-		for (UInt32 i = 0; i < dataHandler->enchantments.count; i++)
-		{
-			dataHandler->enchantments.GetNthItem(i, enchant);
-
-			baseEnchant = enchant->data.baseEnchantment;
-
-			// If there is a base enchantment and we didn't already pushed it in the result
-			if (baseEnchant != NULL && !VMResultArrayUtils::HasItem(&result, (TESForm*) baseEnchant))
-			{
-				result.push_back(baseEnchant);
-			}
-		}
-
-		_MESSAGE("GetAllBaseEnchantments() -> END");
-		return result;
+		auto data = new CraftingData();
+		return data->GetAllBaseEnchantments();
 	}
 
 	VMResultArray<TESForm*> GetAllCookingIngredients(StaticFunctionTag*)
 	{
-		_MESSAGE("GetAllCookingIngredients() -> START");
-		VMResultArray<TESForm*> result;
-
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-		AlchemyItem* item = NULL;
-		_MESSAGE("GetAllCookingIngredients() -> Alchemy items count: %u", dataHandler->potions.count);
-		for (UInt32 i = 0; i < dataHandler->potions.count; i++)
-		{
-			dataHandler->potions.GetNthItem(i, item);
-			if (YeOldeForm::HasKeywords(item, "VendorItemFood") || YeOldeForm::HasKeywords(item, "VendorItemFoodRaw"))
-				result.push_back(item);
-		}
-
-		_MESSAGE("GetAllCookingIngredients() -> END");
-		return result;
+		auto data = new CraftingData();
+		return data->GetAllCookingIngredients();
 	}
 
 	VMResultArray<TESForm*> GetAllAlchemyIngredients(StaticFunctionTag*)
 	{
-		_MESSAGE("GetAllIngredients() -> START");
-		VMResultArray<TESForm*> result;
-
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-		IngredientItem* ingredient = NULL;
-		_MESSAGE("GetAllIngredients() -> Ingredients count: %u", dataHandler->ingredients.count);
-		for (UInt32 i = 0; i < dataHandler->ingredients.count; i++)
-		{
-			dataHandler->ingredients.GetNthItem(i, ingredient);
-			_MESSAGE("  -> ingredient: %u, %x, %u", ingredient->formID, ingredient->formID, ingredient->IsPlayable());
-			result.push_back(ingredient);
-		}
-
-		_MESSAGE("GetAllIngredients() -> END");
-		return result;
+		auto data = new CraftingData();
+		return data->GetAllAlchemyIngredients();
 	}
 
 	VMResultArray<TESForm*> GetAllSoulGems(StaticFunctionTag*, bool filledOnly)
 	{
-		_MESSAGE("GetAllSoulGems() -> START");
-		VMResultArray<TESForm*> result;
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-		tArray<TESForm*> gems = dataHandler->arrSLGM;
-
-		for (UInt32 i = 0; i < gems.count; i++)
-		{
-			TESSoulGem* gem = (TESSoulGem*)gems[i];
-
-			if (!gem || (filledOnly && gem->soulSize == 0))
-				continue;
-
-			result.push_back(gem);
-		}
-		_MESSAGE("GetAllSoulGems() -> END");
-		return result;
-	}
-
-	VMResultArray<TESForm*> GetAllSoulGems(bool filledOnly)
-	{
-		return GetAllSoulGems(NULL, filledOnly);
+		auto data = new CraftingData();
+		return data->GetAllSoulGems();
 	}
 
 	VMResultArray<TESForm*> GetAllTanningMaterials(StaticFunctionTag*)
 	{
-		_MESSAGE("GetAllTanningIngredients() -> START");
-		VMResultArray<TESForm*> result;
-
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-		TESObjectMISC* item = NULL;
-		_MESSAGE("GetAllTanningIngredients() -> Misc objects count: %u", dataHandler->miscObjects.count);
-		for (UInt32 i = 0; i < dataHandler->miscObjects.count; i++)
-		{
-			dataHandler->miscObjects.GetNthItem(i, item);
-			if (YeOldeForm::HasKeywords(item, "VendorItemAnimalHide"))
-				result.push_back(item);
-		}
-
-		_MESSAGE("GetAllTanningIngredients() -> END");
-		return result;
+		auto data = new CraftingData();
+		return data->GetAllTanningMaterials();
 	}
 
 	VMResultArray<TESForm*> GetAllOreIngotMaterials(StaticFunctionTag*)
 	{
-		_MESSAGE("GetAllOreIngotMaterials() -> START");
-		VMResultArray<TESForm*> result;
-
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-		TESObjectMISC* item = NULL;
-		_MESSAGE("GetAllOreIngotMaterials() -> Misc objects count: %u", dataHandler->miscObjects.count);
-		for (UInt32 i = 0; i < dataHandler->miscObjects.count; i++)
-		{
-			dataHandler->miscObjects.GetNthItem(i, item);
-			if (YeOldeForm::HasKeywords(item, "VendorItemOreIngot"))
-				result.push_back(item);
-		}
-
-		_MESSAGE("GetAllOreIngotMaterials() -> END");
-		return result;
+		auto data = new CraftingData();
+		return data->GetAllOreIngotMaterials();
 	}
 
 	VMResultArray<TESForm*> GetAllMaterialsFromConstructibleObject(StaticFunctionTag*)
 	{
-		_MESSAGE("GetAllMaterialsFromConstructibleObject() -> START");
-
-		DataHandler* dataHandler = DataHandler::GetSingleton();
-		tArray<TESForm*> arrCOBJ = dataHandler->arrCOBJ;
-		VMResultArray<TESForm*> result;
-		UInt32 nbItems = 0;
-
-		_MESSAGE("GetAllMaterialsFromConstructibleObject() -> %u Constructible objects found", arrCOBJ.count);
-		for (UInt32 i = 0; i < arrCOBJ.count; i++)
-		{
-			BGSConstructibleObject* recipe = (BGSConstructibleObject*)arrCOBJ[i];
-
-			if (!recipe || !recipe->createdObject)
-				continue;
-
-			for (UInt32 j = 0; j < recipe->container.numEntries; j++)
-			{
-				TESForm* material = recipe->container.entries[j]->form;
-
-				if (material == NULL)
-					continue;
-
-				if (IsNotMaterial(material))
-					continue;
-
-				if (YeOldeForm::HasKeywords(material, "VendorItemOreIngot") ||
-					YeOldeForm::HasKeywords(material, "VendorItemAnimalHide"))
-					continue;
-
-				// If the item is already in the list, no need to add it.
-				if (VMResultArrayUtils::HasItem(&result, material))
-					continue;
-
-				nbItems++;
-				result.push_back(material);
-			}
-		}
-
-		_MESSAGE("GetAllMaterialsFromConstructibleObject() -> Total items returned:  %u", nbItems);
-		return result;
+		auto data = new CraftingData();
+		return data->GetAllMaterialsFromConstructibleObject();
 	}
 
 
 	void AddAllBaseEnchantmentsToList(StaticFunctionTag*, BGSListForm* result)
 	{
-		VMResultArray<TESForm*> items = GetAllBaseEnchantments();
-		YeOldeFormList::AddForms(result, &items);
+		auto data = new CraftingData();
+		return data->AddAllBaseEnchantmentsToList(result);
 	}
 
 	void AddAllCookingIngredientsToList(StaticFunctionTag*, BGSListForm* result)
 	{
-		VMResultArray<TESForm*> items = GetAllCookingIngredients();
-		YeOldeFormList::AddForms(result, &items);
+		auto data = new CraftingData();
+		return data->AddAllCookingIngredientsToList(result);
 	}
 
 	void AddAllAlchemyIngredientsToList(StaticFunctionTag*, BGSListForm* result)
 	{
-		VMResultArray<TESForm*> items = GetAllAlchemyIngredients();
-		YeOldeFormList::AddForms(result, &items);
+		auto data = new CraftingData();
+		return data->AddAllAlchemyIngredientsToList(result);
 	}
 
 	void AddAllSoulGemsToList(StaticFunctionTag*, BGSListForm* result, bool filledOnly)
 	{
-		VMResultArray<TESForm*> items = GetAllSoulGems();
-		YeOldeFormList::AddForms(result, &items);
+		auto data = new CraftingData();
+		return data->AddAllSoulGemsToList(result, filledOnly);
 	}
 
 	void AddAllTanningMaterialsToList(StaticFunctionTag*, BGSListForm* result)
 	{
-		VMResultArray<TESForm*> items = GetAllTanningMaterials();
-		YeOldeFormList::AddForms(result, &items);
+		auto data = new CraftingData();
+		return data->AddAllTanningMaterialsToList(result);
 	}
 
 	void AddAllOreIngotMaterialsToList(StaticFunctionTag*, BGSListForm* result)
 	{
-		VMResultArray<TESForm*> items = GetAllOreIngotMaterials();
-		YeOldeFormList::AddForms(result, &items);
+		auto data = new CraftingData();
+		return data->AddAllOreIngotMaterialsToList(result);
 	}
 
-	void AddAllCraftingMaterialsToList(StaticFunctionTag*, BGSListForm* craftingList, bool addAlchemy, bool addCooking, bool addOreIngots, bool addSoulgems, bool addTanning, bool addFromCOBJ)
+	void AddAllCraftingMaterialsToList(StaticFunctionTag*, BGSListForm* craftingList, bool addAlchemy, bool addCooking, bool addOreIngots, bool addSoulgems, bool addTanning, bool addFromCOBJ, BGSListForm* blacklist)
 	{
-		_MESSAGE("UpdateCraftingMaterialsList -> START");
-		if (craftingList == NULL)
+		CraftingData* data;
+		if (blacklist != NULL)
+			data = new CraftingData(blacklist->forms);
+		else
 		{
-			_ERROR("UpdateCraftingMaterialsList -> craftingList is NULL.");
-			return;
+			data = new CraftingData();
 		}
-		VMResultArray<TESForm*>* result = new VMResultArray<TESForm*>();
-		VMResultArray<TESForm*> tmpResult;
-
-		if (addAlchemy)
-		{
-			tmpResult = YeOldeGameData::GetAllAlchemyIngredients();
-			VMResultArrayUtils::Add(result, tmpResult);
-		}
-
-		if (addCooking)
-		{
-			tmpResult = YeOldeGameData::GetAllCookingIngredients();
-			VMResultArrayUtils::Add(result, tmpResult);
-		}
-
-		if (addOreIngots)
-		{
-			tmpResult = YeOldeGameData::GetAllOreIngotMaterials();
-			VMResultArrayUtils::Add(result, tmpResult);
-		}
-
-		if (addSoulgems)
-		{
-			tmpResult = YeOldeGameData::GetAllSoulGems();
-			VMResultArrayUtils::Add(result, tmpResult);
-		}
-
-		if (addTanning)
-		{
-			tmpResult = YeOldeGameData::GetAllTanningMaterials();
-			VMResultArrayUtils::Add(result, tmpResult);
-		}
-
-		if (addFromCOBJ)
-		{
-			tmpResult = YeOldeGameData::GetAllMaterialsFromConstructibleObject();
-			VMResultArrayUtils::Add(result, tmpResult);
-		}
-
-		_MESSAGE("UpdateCraftingMaterialsList -> result contains %u items)", result->size());
-		YeOldeFormList::AddForms(craftingList, result);
-		_MESSAGE("UpdateCraftingMaterialsList -> END (%u items returned)", craftingList->forms.count);
+		return data->AddAllCraftingMaterialsToList(craftingList, addAlchemy, addCooking, addOreIngots, addSoulgems, addTanning, addFromCOBJ);
 	}
 
 
@@ -347,7 +160,7 @@ namespace YeOldeGameData
 			new NativeFunction1 <StaticFunctionTag, void, BGSListForm*>("AddAllTanningMaterialsToList", "yeolde_papyrus", YeOldeGameData::AddAllTanningMaterialsToList, registry));
 
 		registry->RegisterFunction(
-			new NativeFunction7 <StaticFunctionTag, void, BGSListForm*, bool, bool, bool, bool, bool, bool>("AddAllCraftingMaterialsToList", "yeolde_papyrus", YeOldeGameData::AddAllCraftingMaterialsToList, registry));
+			new NativeFunction8 <StaticFunctionTag, void, BGSListForm*, bool, bool, bool, bool, bool, bool, BGSListForm*>("AddAllCraftingMaterialsToList", "yeolde_papyrus", YeOldeGameData::AddAllCraftingMaterialsToList, registry));
 
 		registry->RegisterFunction(
 			new NativeFunction2 <StaticFunctionTag, void, BGSListForm*, BGSListForm*>("ConcatenateFormLists", "yeolde_papyrus", YeOldeGameData::ConcatenateFormLists, registry));

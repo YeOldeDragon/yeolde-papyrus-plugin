@@ -18,13 +18,16 @@
     <ClCompile Include="YeOldeGameData.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="YeOldeFormList.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="YeOldeForm.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="CraftingData.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="YeOldeFormList.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YeOldeFormList.h">
@@ -38,6 +41,9 @@
     </ClInclude>
     <ClInclude Include="version.h" />
     <ClInclude Include="WMRResultArrayUtils.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="CraftingData.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

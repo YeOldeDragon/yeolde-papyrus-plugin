@@ -284,12 +284,14 @@
     <ResourceCompile Include="version.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CraftingData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="YeOldeForm.cpp" />
     <ClCompile Include="YeOldeFormList.cpp" />
     <ClCompile Include="YeOldeGameData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CraftingData.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="WMRResultArrayUtils.h" />
     <ClInclude Include="YeOldeForm.h" />
