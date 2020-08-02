@@ -111,7 +111,7 @@ VMResultArray<TESForm*> CraftingData::GetAllSoulGems(bool filledOnly)
 	{
 		TESSoulGem* gem = (TESSoulGem*)gems[i];
 
-		_MESSAGE("GetAllSoulGems() -> gem %u: soulSize=%u, gemSize=%u", dataHandler->miscObjects.count, gem->soulSize, gem->gemSize);
+		//_MESSAGE("GetAllSoulGems() -> gem %u: soulSize=%u, gemSize=%u", dataHandler->miscObjects.count, gem->soulSize, gem->gemSize);
 		if (!gem || (filledOnly && gem->soulSize == 0) || IsBlackListed(gem))
 			continue;
 

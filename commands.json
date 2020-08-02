@@ -9,6 +9,11 @@
       "fileName": "cmd.exe",
       "workingDirectory": ".",
       "arguments": "/c \"deploy VR.cmd\""
+    },
+    "Deploy yeolde-papyrus": {
+      "fileName": "cmd.exe",
+      "workingDirectory": ".",
+      "arguments": "/c \"Deploy yeolde-papyrus.cmd\""
     }
   }
 }

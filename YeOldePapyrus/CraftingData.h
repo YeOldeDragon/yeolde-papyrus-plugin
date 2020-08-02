@@ -30,7 +30,7 @@ private:
 		{
 			if (_blacklist[i] == form)
 			{
-				_MESSAGE("IsBlackListed(): Item is blacklisted! (%u) %s", _blacklist[i]->formID, _blacklist[i]->GetName());
+				_MESSAGE("IsBlackListed(): Item is blacklisted! (index = %u)", i);
 				return true;
 			}
 		}
